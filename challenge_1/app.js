@@ -1,74 +1,126 @@
 
 
-let count = 0;
-let activeGame = true;
-let winner;
+////////////////////////////////////////////
+////////////     MODEL     /////////////////
+////////////////////////////////////////////
 
-
-const resetGame = () => {
-    count = 0;
-    activeGame = true;
-    let DOMElems = document.getElementsByTagName('td')
-    for (let i = 0; i< DOMElems.length; i++) {
-        DOMElems[i].innerHTML = ' ';
-    }
-    document.getElementsByTagName('h2')[0].innerHTML = 'NO WINNER YET';
+const model = {
+    count: 0,
+    activeGame: true,
+    players: ['X', '0'],
+    winner: null,
+    prevWinner: null,
+    board: [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']],
 }
 
 
-const selectCell = (event) => {
-    let players = ['X', 'O'];
-    if (event.target.innerHTML === ' ' && activeGame) {
-        event.target.innerHTML = players[count%2];
-        count++;
-        checkForWinner()
+////////////////////////////////////////////
+////////////     CONTROLLER     ////////////
+////////////////////////////////////////////
 
-    }
-}
+const controller = {
+
+    resetGame: () => {
+        if (model.winner) {
+            model.prevWinner = model.winner;
+        }
+        model.count = 0;
+        model.winner = null;
+        model.activeGame = true;
+        model.board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
+        view.clearBoard();
+        view.updateApp();
+    },
 
 
-const checkForWinner = () => {
-    let DOMElems = document.getElementsByTagName('td')
-    let board = [[],[],[]];
-    for (let i = 0; i< DOMElems.length; i++) {
-        board[Math.floor(i/3)].push(DOMElems[i].innerHTML)
-    }
-    
-    // Check row and col wins in same loop
-    for (let i = 0; i < 3; i++) {
-        if (board[0][i] === board[1][i] && 
-                board[0][i] === board[2][i] && 
-                board[0][i] !== ' ') {
-            winner = board[0][i];
-            endGame(winner);
+    selectCell: (event) => {
+        if (event.srcElement.innerHTML === ' ' && model.activeGame) {
+            controller.updateBoard(event.srcElement)
+            controller.checkForWinner()
+        }
+    },
+
+    updateBoard: (DOMElem) => {
+        let currentPlayer = model.players[model.count%2]
+        let cell = DOMElem.id;
+        let row = Math.floor(cell/3);
+        let col = cell%3; 
+        model.board[row][col] = currentPlayer
+        model.count++;
+        view.drawBoard()
+    },
+
+    checkForWinner: () => {
+        // Check row and col wins in same loop
+        for (let i = 0; i < 3; i++) {
+            if (model.board[0][i] === model.board[1][i] && 
+                    model.board[0][i] === model.board[2][i] && 
+                    model.board[0][i] !== ' ') {
+                model.winner = model.board[0][i];
+            }
+
+            if (model.board[i][0] === model.board[i][1] && 
+                    model.board[i][0] === model.board[i][2] && 
+                    model.board[i][0] !== ' ') {
+                model.winner = model.board[i][0];
+            }
         }
 
-        if (board[i][0] === board[i][1] && 
-                board[i][0] === board[i][2] && 
-                board[i][0] !== ' ') {
-            winner = board[i][0];
-            endGame(winner);
+        //Check for diagonal wins
+        if (model.board[0][0] === model.board[1][1] && 
+                model.board[0][0] === model.board[2][2] && 
+                model.board[0][0] !== ' ') {
+            model.winner = model.board[0][0];
+        }
+
+        if (model.board[0][2] === model.board[1][1] && 
+                model.board[0][2] === model.board[2][0] && 
+                model.board[0][2] !== ' ') {
+            model.winner = model.board[0][2];
+        }
+        
+        if (model.winner) {
+            model.activeGame = false;
+            view.updateApp()
         }
     }
-
-    //Check for diagonal wins
-    if (board[0][0] === board[1][1] && 
-            board[0][0] === board[2][2] && 
-            board[0][0] !== ' ') {
-        winner = board[0][0];
-        endGame(winner);
-    }
-
-    if (board[0][2] === board[1][1] && 
-            board[0][2] === board[2][0] && 
-            board[0][2] !== ' ') {
-        winner = board[0][2];
-        endGame(winner);
-    }
-
 }
 
-const endGame = (winner) => {
-    document.getElementsByTagName('h2')[0].innerHTML = winner + ' has won the game!';
-    activeGame = false;
+////////////////////////////////////////////
+////////////     VIEW     //////////////////
+////////////////////////////////////////////
+
+const view = {
+
+    updateApp: () => {
+        if (model.winner) {
+            document.getElementsByTagName('h2')[0].innerHTML = model.winner + ' has won the game!';
+        } else {
+            document.getElementsByTagName('h2')[0].innerHTML = 'NO WINNER YET';
+        }
+        
+        if (model.prevWinner) {
+            document.getElementsByTagName('h3')[0].innerHTML = 'Previous winner was: ' + model.prevWinner;
+        } else {
+            document.getElementsByTagName('h3')[0].innerHTML = 'NO PREVIOUS WINNER'
+        }
+        
+    },
+
+    clearBoard: () => {
+        for (elem of document.getElementsByTagName('td')) {
+            elem.innerHTML = ' ';
+        }
+    },
+
+    drawBoard: () => {
+        for (let row = 0; row < model.board.length; row++) {
+            for (let col = 0; col < model.board[0].length; col++) {
+                let boardId = (row*3) + col;
+                document.getElementById(boardId).innerHTML = model.board[row][col]
+            }
+        }
+    }
 }
+
+

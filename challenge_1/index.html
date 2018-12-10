@@ -12,27 +12,28 @@
 
 </head>
 
-<body>
+<body onload=''>
   <script src="app.js"></script>
   <h1>Tic-Tac-Toe Game</h1>
-  <button onclick='resetGame()'>Click to reset Game</button>
-  <table>
+  <button onclick='controller.resetGame()'>Click to reset Game</button>
+  <table onclick="controller.selectCell(event)">
     <tr>
-      <td onclick="selectCell(event)"> </td>
-      <td onclick="selectCell(event)"> </td>
-      <td onclick="selectCell(event)"> </td>
+      <td id='0'> </td>
+      <td id='1'> </td>
+      <td id='2'> </td>
     </tr>
     <tr>
-      <td onclick="selectCell(event)"> </td>
-      <td onclick="selectCell(event)"> </td>
-      <td onclick="selectCell(event)"> </td>
+      <td id='3'> </td>
+      <td id='4'> </td>
+      <td id='5'> </td>
     </tr>
     <tr>
-      <td onclick="selectCell(event)"> </td>
-      <td onclick="selectCell(event)"> </td>
-      <td onclick="selectCell(event)"> </td>
+      <td id='6'> </td>
+      <td id='7'> </td>
+      <td id='8'> </td>
     </tr>
   </table> 
   <h2>NO WINNER YET</h2>
+  <h3>NO PREVIOUS WINNER</h3>
 </body>
 </html>
