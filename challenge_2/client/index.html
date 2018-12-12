@@ -1,2 +1,80 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>This is the title of the webpage!</title>
+  <!-- <script src="../node_modules/jquery/dist/jquery.js"></script> -->
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+</head>
+
+<body>
+  <h1>JSON TO CSV CONVERTER</h1>
+  <!-- <form action="http://localhost:3000/uploadJSON" method="post"> -->
+  <form onsubmit="formSubmitFn(event)">
+    <div>
+      <label for="input">Insert JSON here</label>
+      <input name="input" id="input">
+    </div>
+    <div>
+      <button>Send JSON to server</button>
+    </div>
+  </form>
+
+  <form onchange="fileSubmitFn(event)">
+    <label for="avatar">Choose a profile picture:</label>
+    <input type="file" id="avatar" name="avatar" accept=".json">
+  </form>
+  <div id="csv-text"></div>
+  <script>
+    const formSubmitFn = (e) => {
+      e.preventDefault();
+      let data = JSON.stringify(e.target[0].value)
+      console.log(data)
+
+      fetch('http://localhost:3000/uploadJSON', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      })
+        .then((res) => {
+          return res.json()
+        })
+        .then((res) => {
+          console.log('res: ', res)
+          let text = JSON.stringify(res)
+          console.log('text: ', text)
+          document.getElementById('csv-text').innerHTML = text
+        })
 
 
+
+      // $.ajax({
+      //   url: 'http://localhost:3000/uploadJSON',
+      //   type: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   data: data,
+      //   success: (res) => {
+      //     console.log('res ', res)
+      //   },
+      //   error: function (error) {
+      //     console.error('chatterbox: Failed to fetch messages', error);
+      //   }
+      // })
+
+    }
+
+    const fileSubmitFn = (event) => {
+      console.log(event.target.files[0])
+    }
+
+
+  </script>
+  <script src="app.js"></script>
+</body>
+
+</html>
