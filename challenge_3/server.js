@@ -22,8 +22,9 @@ app.post('/login', (req, res) => {
   let password = req.body.password;
   let type = req.body.type;
   if (type === 'SignUpPage') {
-    dbConnection.query(`INSERT INTO users (email, password)
-    VALUES ("${email}", "${password}");`, (err, results, feilds) => {
+    let queryString = `INSERT INTO users (email, password)
+    VALUES ("${email}", "${password}");`
+    dbConnection.query(queryString, (err, results, feilds) => {
       if (err) {
         res.sendStatus(500)
         res.end
@@ -33,7 +34,8 @@ app.post('/login', (req, res) => {
       }
     })
   } else if (type === 'LogInPage') {
-    console.log('NEED TO VERIFY LOGIN');
+    let queryString = `SELECT * FROM users WHERE email="${email};`
+    // TODO : write query
     res.end()
   }
 })

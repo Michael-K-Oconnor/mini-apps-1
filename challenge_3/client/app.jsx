@@ -53,14 +53,15 @@ class App extends React.Component {
     e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
-    })
+    }
   }
 
 
   render() {
     if (this.state.isLoggedIn === false) {
       if (this.state.currentPage === 'SignUpPage' || this.state.currentPage === 'LoginPage') {
-        return (<LoginPage handleSubmit={this.handleLoginPageSubmit} />)
+        return (<LoginPage handleSubmit={this.handleLoginPageSubmit}
+          handleInputChange={this.handleInputChange} emailText={this.state.email} passwordText={this.state.password} />)
       } else {
         return (<HomePage handleClick={this.handleHomePageClick} />)
       }
