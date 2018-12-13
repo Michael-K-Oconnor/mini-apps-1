@@ -1,0 +1,9 @@
+"use strict";
+
+var ProfilePage = function ProfilePage(_ref) {
+  var handlePage0Click = _ref.handlePage0Click;
+  return React.createElement("button", {
+    onClick: handlePage0Click
+  }, "Checkout");
+};
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2NsaWVudC9wcm9maWxlcGFnZS5qc3giXSwibmFtZXMiOlsiUHJvZmlsZVBhZ2UiLCJoYW5kbGVQYWdlMENsaWNrIl0sIm1hcHBpbmdzIjoiOztBQUFBLElBQU1BLFdBQVcsR0FBRyxTQUFkQSxXQUFjO0FBQUEsTUFBR0MsZ0JBQUgsUUFBR0EsZ0JBQUg7QUFBQSxTQUNsQjtBQUFRLElBQUEsT0FBTyxFQUFFQTtBQUFqQixnQkFEa0I7QUFBQSxDQUFwQiIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IFByb2ZpbGVQYWdlID0gKHsgaGFuZGxlUGFnZTBDbGljayB9KSA9PiAoXG4gIDxidXR0b24gb25DbGljaz17aGFuZGxlUGFnZTBDbGlja30+XG4gICAgQ2hlY2tvdXRcbiAgICA8L2J1dHRvbiA+XG4pXG4iXX0=
