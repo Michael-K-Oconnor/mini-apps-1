@@ -13,7 +13,7 @@ const LoginPage = ({ player1isLoggedIn, player1name, player1failure,
       }
       <br />
       <br />
-      PLAYER 2 {console.log('failure: ', { player2failure })}
+      PLAYER 2
       {
         player2isLoggedIn ? (
           <div>{player2name} is logged in as Player 2</div>) : (
