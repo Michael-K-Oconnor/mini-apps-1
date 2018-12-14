@@ -1,26 +1,27 @@
 import React from 'react';
 import InputForm from './inputform';
 
-const LoginPage = ({ player1, player2 }) => (
-  <div>
-    PLAYER 1
+const LoginPage = ({ player1isLoggedIn, player1name, player1failure,
+  player2isLoggedIn, player2name, player2failure, handleSubmit }) => (
+    <div>
+      PLAYER 1
     {
-      player1.isLoggedIn ? (
-        <div>Player 1 is logged in</div>) : (
-          <InputForm player={player1} />
-      )
-    }
-    <br />
-    <br />
-    PLAYER 2
-    {
-      player2.isLoggedIn ? (
-        <div>Player 2 is logged in</div>) : (
-          <InputForm player={player2} />
-      )
-    }
-  </div>
-);
+        (player1isLoggedIn) ? (
+          <div>{player1name} is logged in as Player 1</div>) : (
+            <InputForm id={1} failure={player1failure} handleSubmit={handleSubmit} />
+          )
+      }
+      <br />
+      <br />
+      PLAYER 2 {console.log('failure: ', { player2failure })}
+      {
+        player2isLoggedIn ? (
+          <div>{player2name} is logged in as Player 2</div>) : (
+            <InputForm id={2} failure={player2failure} handleSubmit={handleSubmit} />
+          )
+      }
+    </div>
+  );
 
 
 export default LoginPage;

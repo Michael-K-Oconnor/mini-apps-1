@@ -6,7 +6,6 @@ module.exports = {
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "airbnb"
     ],
     "rules": {
         "no-use-before-define": 0,
